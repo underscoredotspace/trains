@@ -1,0 +1,4 @@
+.netlify
+.cache
+dist
+node_modules
