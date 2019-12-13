@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Trains",
   "scripts": {
-    "start": "parcel start app/client/index.html"
+    "start": "parcel start app/client/index.html",
+    "build": "parcel build app/client/index.html --public-url ./"
   },
   "author": "Colin M Tindle <ampersand@underscore.space>",
   "license": "CC-BY-4.0",
