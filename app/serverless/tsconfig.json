@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "skipLibCheck": true,
+        "target": "es6",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "lib": ["es2016"],
+        "outDir": "../../dist-serverless",
+        "sourceMap": false
+    },
+    "include": ["./**/*.ts"]
+}
