@@ -5,3 +5,8 @@
   publish = "dist-client"
   functionsSource = "app/serverless"
   functions = "dist-serverless"
+
+[[redirects]]
+  from = "*"
+  to = "/index.html"
+  status = 200
