@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Trains",
   "scripts": {
-    "start": "parcel start app/client/index.html --out-dir dist-client",
+    "start:client": "parcel start app/client/index.html --out-dir dist-client",
+    "start:sl": "tsc --build app/serverless --watch",
+    "start": "run-p start:client start:sl",
     "build:client": "parcel build app/client/index.html --public-url ./ --out-dir dist-client",
     "build:sl": "tsc --build app/serverless",
     "build": "run-p build:client build:sl"

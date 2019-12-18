@@ -1,5 +1,11 @@
 # netlify.toml 
 
+[dev]
+  command = "npm run start"
+  publish = "dist-client"
+  functionsSource = "app/serverless"
+  functions = "dist-serverless"
+
 [build]
   command = "npm run build"
   publish = "dist-client"
