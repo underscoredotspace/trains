@@ -1,27 +1,23 @@
-const baseUrl = "/.netlify/functions/get_rtt"
+const baseUrl = `/.netlify/functions/get_rtt`
 
 import { ReactNetlifyIdentityAPI } from "react-netlify-identity"
+import { Direction } from "../Times/types"
 
 interface GetTimesProps {
     station: string
-    isLoggedIn: ReactNetlifyIdentityAPI["isLoggedIn"]
+    direction: Direction
     authedFetch: ReactNetlifyIdentityAPI["authedFetch"]
 }
 
 export const getTimes = ({
     station,
-    isLoggedIn,
+    direction,
     authedFetch
 }: GetTimesProps): Promise<any> => {
-    const url = `${baseUrl}?station=${station}`
-    if (!isLoggedIn) {
-        return Promise.reject("Not logged in")
-    }
+    const url = `${baseUrl}?station=${station}&direction=${direction}`
 
     return authedFetch
         .get(url)
-        .catch(error => {
-            return error
-        })
+        .catch(error => error)
         .then(response => response)
 }

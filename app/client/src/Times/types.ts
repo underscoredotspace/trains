@@ -1,11 +1,11 @@
 import { RouteComponentProps } from "@reach/router"
 
-export enum TimeType {
-    ARR = "Arrival",
-    DEP = "Departure"
+export enum Direction {
+    ARR = "arr",
+    DEP = "dep"
 }
 
 export type TimesProps = RouteComponentProps<{
-    type: TimeType
+    direction: Direction
     station: string
 }>

@@ -1,12 +1,13 @@
-export function handler(_event, context, callback) {
+export async function handler(event, context) {
     const { user } = context.clientContext
+    const { station, direction } = event.queryStringParameters
 
-    if (!user) {
-        return callback(null, { statusCode: 401, body: "unauthorised" })
+    if (!process.env["NETLIFY_DEV"] && !user) {
+        return { statusCode: 401, body: "unauthorised" }
     }
 
-    return callback(null, {
+    return {
         statusCode: 200,
-        body: JSON.stringify(user)
-    })
+        body: JSON.stringify({ station, direction })
+    }
 }

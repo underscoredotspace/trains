@@ -1,34 +1,51 @@
 import React, { useState, useEffect } from "react"
-import { TimesProps } from "./types"
-import { getTimes } from "../services/get_departures"
+import { TimesProps, Direction } from "./types"
+import { getTimes } from "../services"
 import { useIdentityContext } from "react-netlify-identity"
 
-const Times: React.FC<TimesProps> = ({ type, station = "" }) => {
+const Times: React.FC<TimesProps> = ({
+    direction = Direction.DEP,
+    station = ""
+}) => {
     const [timetable, setTimetable] = useState()
+    const [isLoading, setIsLoading] = useState(false)
+
     const { authedFetch, isLoggedIn } = useIdentityContext()
 
     useEffect(() => {
-        getTimes({ station, authedFetch, isLoggedIn })
+        if (!isLoggedIn) {
+            return
+        }
+
+        const timeout = setTimeout(() => setIsLoading(true), 750)
+        getTimes({ station, authedFetch, direction })
             .then(times => {
                 setTimetable(times)
             })
             .catch(error => {
                 setTimetable(error)
             })
-    }, [])
+            .finally(() => clearTimeout(timeout))
+
+        return () => clearTimeout(timeout)
+    }, [direction, station])
+
+    if (!isLoggedIn) {
+        return <p>Log in to continue</p>
+    }
 
     const loading = <span>loading</span>
 
     const timetableElement = (
         <>
             <h2>
-                {type} times for {station}
+                {direction} times for {station}
             </h2>
             <p>{JSON.stringify(timetable)}</p>
         </>
     )
 
-    return timetable ? timetableElement : loading
+    return !isLoading ? timetableElement : loading
 }
 
 export default Times
