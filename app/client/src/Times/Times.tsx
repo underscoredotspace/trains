@@ -10,13 +10,9 @@ const Times: React.FC<TimesProps> = ({
     const [timetable, setTimetable] = useState()
     const [isLoading, setIsLoading] = useState(false)
 
-    const { authedFetch, isLoggedIn } = useIdentityContext()
+    const { authedFetch } = useIdentityContext()
 
     useEffect(() => {
-        if (!isLoggedIn) {
-            return
-        }
-
         const timeout = setTimeout(() => setIsLoading(true), 750)
         getTimes({ station, authedFetch, direction })
             .then(times => {
@@ -29,10 +25,6 @@ const Times: React.FC<TimesProps> = ({
 
         return () => clearTimeout(timeout)
     }, [direction, station])
-
-    if (!isLoggedIn) {
-        return <p>Log in to continue</p>
-    }
 
     const loading = <span>loading</span>
 

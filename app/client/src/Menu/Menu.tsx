@@ -48,11 +48,6 @@ const Section: React.FC<SectionProps> = ({ section, label }) => (
 
 export default () => (
     <nav>
-        <ul>
-            <li>
-                <Link to="/">Home</Link>
-            </li>
-            {sections.map(Section)}
-        </ul>
+        <ul>{sections.map(Section)}</ul>
     </nav>
 )

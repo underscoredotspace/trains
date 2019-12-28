@@ -1,25 +1,35 @@
 import React from "react"
 import { Router, RouteComponentProps } from "@reach/router"
+import { useIdentityContext } from "react-netlify-identity"
+
 import { Arrivals, Departures } from "./Times"
+import Menu from "./Menu"
+import Auth from "./Auth"
 
-const Home: React.FC<RouteComponentProps> = () => <h2>Welcome</h2>
+const NotFound: React.FC<RouteComponentProps> = () => <p>Select a station</p>
 
-const Times: React.FC<RouteComponentProps> = () => (
-    <>
-        <Router>
-            <Departures path="/dep/:station" />
-            <Arrivals path="/arr/:station" />
-        </Router>
-    </>
-)
+const App: React.FC<RouteComponentProps> = () => {
+    const { isLoggedIn } = useIdentityContext()
 
-export default () => (
-    <>
-        <h1>Trains</h1>
+    return (
+        <>
+            <header>
+                {isLoggedIn && <Menu />}
+                <Auth />
+            </header>
+            {isLoggedIn && (
+                <main>
+                    <h1>Trains</h1>
 
-        <Router>
-            <Home path="/" />
-            <Times path="/times/*" />
-        </Router>
-    </>
-)
+                    <Router>
+                        <Departures path="/times/dep/:station" />
+                        <Arrivals path="/times/arr/:station" />
+                        <NotFound default />
+                    </Router>
+                </main>
+            )}
+        </>
+    )
+}
+
+export default App
